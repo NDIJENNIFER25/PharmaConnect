@@ -1,0 +1,281 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaConnect - Connecting Patients with Pharmacies</title>
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        body {
+            background-color: #f8fafc;
+        }
+        .header {
+            background-color: white;
+            padding: 1rem 5%;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--slate-800);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .logo i {
+            color: var(--primary);
+        }
+        .nav-links a {
+            margin-left: 1.5rem;
+            text-decoration: none;
+            color: var(--slate-600);
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+        .hero {
+            text-align: center;
+            padding: 6rem 1.5rem;
+            background-color: white;
+        }
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            color: var(--slate-800);
+            margin-bottom: 1rem;
+            line-height: 1.2;
+        }
+        .hero p {
+            font-size: 1.25rem;
+            color: var(--slate-600);
+            max-width: 700px;
+            margin: 0 auto 2rem auto;
+        }
+        .cta-group {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+        }
+        .section {
+            padding: 5rem 5%;
+        }
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--slate-800);
+            margin-bottom: 3rem;
+        }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        .feature-card {
+            background: white;
+            padding: 2rem;
+            border-radius: 0.75rem;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+        .feature-card i {
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .feature-card h3 {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+        }
+        .cta-section {
+            background-color: var(--slate-800);
+            color: white;
+            text-align: center;
+        }
+        .cta-section h2 {
+            color: white;
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        .cta-section p {
+            color: var(--slate-300);
+            margin-bottom: 2rem;
+            font-size: 1.125rem;
+        }
+        .footer {
+            background-color: var(--slate-100);
+            color: var(--slate-600);
+            padding: 3rem 5%;
+            border-top: 1px solid var(--border-color);
+        }
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .footer-links a {
+            color: var(--slate-600);
+            text-decoration: none;
+            margin-left: 1.5rem;
+        }
+        .footer-links a:hover {
+            color: var(--primary);
+        }
+    </style>
+</head>
+<body>
+    <header class="header" style="background-color: white; padding: 1rem 5%; border-bottom: 1px solid #e5e7eb; box-shadow: 0 1px 3px rgba(0,0,0,0.05);">
+        <a href="{% url 'home' %}" class="logo" style="font-size: 1.5rem; font-weight: 700; color: #2c3e50; text-decoration: none; display: flex; align-items: center; gap: 0.5rem;">
+            <i class="fas fa-prescription-bottle-alt" style="color: #3a8dde;"></i>
+            <span>PharmaConnect</span>
+        </a>
+        <nav class="nav-links" style="display: flex; align-items: center;">
+            <a href="{% url 'app' %}" style="margin-left: 1.5rem; text-decoration: none; color: #5d7a99; font-weight: 500; transition: color 0.2s;">Find a Pharmacy</a>
+            <a href="#features" style="margin-left: 1.5rem; text-decoration: none; color: #5d7a99; font-weight: 500; transition: color 0.2s;">Features</a>
+            <a href="#for-pharmacies" style="margin-left: 1.5rem; text-decoration: none; color: #5d7a99; font-weight: 500; transition: color 0.2s;">For Pharmacies</a>
+            <a href="{% url 'user-login' %}" class="btn btn-secondary" style="margin-left: 1.5rem; background-color: transparent; color: #3a8dde; border: 1px solid #3a8dde; padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 500; text-decoration: none;">User Login</a>
+            <a href="{% url 'pharmacy-login' %}" class="btn btn-primary" style="margin-left: 1rem; background-color: #3a8dde; color: white; border: none; padding: 0.5rem 1rem; border-radius: 0.375rem; font-weight: 500; text-decoration: none;">Pharmacy Login</a>
+        </nav>
+    </header>
+
+    <main>
+        <section class="hero" style="background: linear-gradient(135deg, #f0f7ff 0%, #e0eeff 100%); padding: 8rem 1.5rem;">
+            <h1 style="font-size: 3.5rem; font-weight: 800; color: #2c3e50; margin-bottom: 1.5rem; line-height: 1.2;">Find Your Medication, Instantly.</h1>
+            <p style="font-size: 1.25rem; color: #5d7a99; max-width: 700px; margin: 0 auto 2.5rem auto;">PharmaConnect helps you locate nearby pharmacies with the medication you need in stock, saving you time and worry.</p>
+            <div class="cta-group">
+                <a href="{% url 'app' %}" class="btn btn-primary btn-lg" style="background-color: #3a8dde; color: white; border: none; padding: 0.75rem 1.5rem; font-weight: 600; box-shadow: 0 4px 6px rgba(58, 141, 222, 0.25);">Find a Pharmacy Near You</a>
+                <a href="{% url 'user-register-page' %}" class="btn btn-secondary btn-lg" style="background-color: white; color: #3a8dde; border: 1px solid #3a8dde; padding: 0.75rem 1.5rem; font-weight: 600;">Create an Account</a>
+            </div>
+        </section>
+
+        <section id="features" class="section" style="background-color: #f8fafc;">
+            <h2 class="section-title" style="color: #2c3e50;">Everything You Need, Nothing You Don't</h2>
+            <div class="features-grid">
+                <div class="feature-card" style="box-shadow: 0 4px 10px rgba(58, 141, 222, 0.1);">
+                    <i class="fas fa-search-location" style="color: #3a8dde;"></i>
+                    <h3 style="color: #2c3e50;">Real-Time Search</h3>
+                    <p style="color: #5d7a99;">Search for pharmacies by name or location and see real-time medication availability.</p>
+                </div>
+                <div class="feature-card" style="box-shadow: 0 4px 10px rgba(58, 141, 222, 0.1);">
+                    <i class="fas fa-map-marked-alt" style="color: #3a8dde;"></i>
+                    <h3 style="color: #2c3e50;">Interactive Map</h3>
+                    <p style="color: #5d7a99;">View all pharmacies on an interactive map to easily find the most convenient option for you.</p>
+                </div>
+                <div class="feature-card" style="box-shadow: 0 4px 10px rgba(58, 141, 222, 0.1);">
+                    <i class="fas fa-clipboard-list" style="color: #3a8dde;"></i>
+                    <h3 style="color: #2c3e50;">Prescription Management</h3>
+                    <p style="color: #5d7a99;">Keep track of your prescriptions and get reminders for refills, all in one place.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="for-pharmacies" class="section cta-section" style="background-color: #1e3a5c; color: white;">
+            <h2 style="color: white;">Join Our Network of Pharmacies</h2>
+            <p style="color: #d4e5f7;">Increase your visibility, manage your inventory, and connect with more customers in your area.</p>
+            <a href="{% url 'pharmacy-signup' %}" class="btn btn-light btn-lg" style="background-color: white; color: #3a8dde; border: none; font-weight: 600;">Register Your Pharmacy</a>
+        </section>
+    </main>
+
+    <!-- Access Portals Section -->
+    <section class="access-portals" style="padding: 4rem 1rem; background-color: #e8f4fd;">
+        <div class="container" style="max-width: 1200px; margin: 0 auto; text-align: center;">
+            <h2 style="font-size: 2.25rem; font-weight: 700; margin-bottom: 1rem; color: #2c3e50;">Choose Your Portal</h2>
+            <p style="font-size: 1.125rem; color: #5d7a99; max-width: 600px; margin: 0 auto 3rem auto;">
+                Whether you're a customer looking for medication or a pharmacy managing your services, we have a dedicated portal for you.
+            </p>
+            <div class="portals-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem; max-width: 900px; margin: 0 auto; text-align: left;">
+                
+                <!-- User Portal Card -->
+                <div class="portal-card" style="background-color: white; border-radius: 0.75rem; padding: 2rem; box-shadow: 0 4px 10px rgba(58, 141, 222, 0.1); display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <div class="portal-icon" style="font-size: 3rem; color: #3a8dde; margin-bottom: 1rem;">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <div class="portal-content">
+                        <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0; margin-bottom: 0.5rem; color: #2c3e50;">For Customers</h3>
+                        <p style="color: #5d7a99; margin-bottom: 1.5rem;">Order prescriptions, find local pharmacies, and manage your health profile with ease.</p>
+                        <a href="{% url 'user-login' %}" class="btn btn-primary" style="width: 100%;">Access User Portal</a>
+                    </div>
+                </div>
+
+                <!-- Pharmacy Portal Card -->
+                <div class="portal-card" style="background-color: white; border-radius: 0.75rem; padding: 2rem; box-shadow: 0 4px 10px rgba(58, 141, 222, 0.1); display: flex; flex-direction: column; align-items: center; text-align: center;">
+                    <div class="portal-icon" style="font-size: 3rem; color: #3a8dde; margin-bottom: 1rem;">
+                        <i class="fas fa-clinic-medical"></i>
+                    </div>
+                    <div class="portal-content">
+                        <h3 style="font-size: 1.5rem; font-weight: 600; margin-top: 0; margin-bottom: 0.5rem; color: #2c3e50;">For Pharmacies</h3>
+                        <p style="color: #5d7a99; margin-bottom: 1.5rem;">Manage your inventory, process orders, and connect with customers in your community.</p>
+                        <a href="{% url 'pharmacy-login' %}" class="btn btn-primary" style="width: 100%;">Access Pharmacy Portal</a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section id="testimonials" class="section" style="background-color: #f0f7ff;">
+        <div class="container" style="max-width: 1200px; margin: 0 auto;">
+            <h2 class="section-title" style="color: #2c3e50;">What Our Users Say</h2>
+            <div class="testimonials-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 2rem;">
+                <div class="testimonial-card" style="background-color: white; border-radius: 0.75rem; padding: 2rem; box-shadow: 0 4px 10px rgba(58, 141, 222, 0.1);">
+                    <div class="testimonial-content">
+                        <p style="color: #5d7a99; font-style: italic;">"PharmaConnect saved me hours of calling around to find my medication. I found what I needed in minutes!"</p>
+                    </div>
+                    <div class="testimonial-author" style="display: flex; align-items: center; margin-top: 1.5rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0eeff; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                            <i class="fas fa-user" style="color: #3a8dde;"></i>
+                        </div>
+                        <div>
+                            <h4 style="color: #2c3e50; margin: 0; font-size: 1.125rem;">Sarah Johnson</h4>
+                            <p style="color: #3a8dde; margin: 0; font-size: 0.875rem;">Patient</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="testimonial-card" style="background-color: white; border-radius: 0.75rem; padding: 2rem; box-shadow: 0 4px 10px rgba(58, 141, 222, 0.1);">
+                    <div class="testimonial-content">
+                        <p style="color: #5d7a99; font-style: italic;">"Since joining PharmaConnect, we've seen a 30% increase in new customers. The platform is intuitive and easy to manage."</p>
+                    </div>
+                    <div class="testimonial-author" style="display: flex; align-items: center; margin-top: 1.5rem;">
+                        <div style="width: 50px; height: 50px; border-radius: 50%; background-color: #e0eeff; display: flex; align-items: center; justify-content: center; margin-right: 1rem;">
+                            <i class="fas fa-user" style="color: #3a8dde;"></i>
+                        </div>
+                        <div>
+                            <h4 style="color: #2c3e50; margin: 0; font-size: 1.125rem;">Michael Chen</h4>
+                            <p style="color: #3a8dde; margin: 0; font-size: 0.875rem;">Pharmacy Owner</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer" style="background-color: #1e3a5c; color: #d4e5f7; padding: 3rem 5%; border-top: none;">
+        <div class="footer-container" style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center;">
+            <p style="margin: 0;">&copy; 2024 PharmaConnect. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#" style="color: #d4e5f7; text-decoration: none; margin-left: 1.5rem; transition: color 0.2s;">Privacy Policy</a>
+                <a href="#" style="color: #d4e5f7; text-decoration: none; margin-left: 1.5rem; transition: color 0.2s;">Terms of Service</a>
+                <a href="#" style="color: #d4e5f7; text-decoration: none; margin-left: 1.5rem; transition: color 0.2s;">Contact Us</a>
+            </div>
+        </div>
+    </footer>
+
+</body>
+</html>
