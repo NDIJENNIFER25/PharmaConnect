@@ -1,0 +1,35 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Orders - PharmaConnect</title>
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+    <header class="header">
+        <a href="{% url 'home' %}" class="logo">
+            <i class="fas fa-prescription-bottle-alt"></i>
+            <span>PharmaConnect</span>
+        </a>
+        <nav class="nav-links">
+            <a href="{% url 'app' %}">Find a Pharmacy</a>
+            <a href="{% url 'user-orders' %}" class="active">My Orders</a>
+            <a href="#" id="logout-button-nav">Logout</a>
+        </nav>
+    </header>
+
+    <main class="container">
+        <h2>My Order History</h2>
+        <div id="order-list-container">
+            <!-- Orders will be dynamically loaded here -->
+            <p>Loading your orders...</p>
+        </div>
+    </main>
+
+    <script src="{% static 'js/user_orders.js' %}"></script>
+</body>
+</html>
