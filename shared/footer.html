@@ -1,0 +1,113 @@
+    <!-- Main Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <div class="footer-logo">
+                    <i class="fas fa-prescription-bottle-alt"></i>
+                    <span>PharmaConnect</span>
+                </div>
+                <p class="footer-description">
+                    Connecting patients with pharmacies for better healthcare access and medication management.
+                </p>
+                <div class="social-links">
+                    <a href="#" aria-label="Facebook"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" aria-label="Twitter"><i class="fab fa-twitter"></i></a>
+                    <a href="#" aria-label="Instagram"><i class="fab fa-instagram"></i></a>
+                    <a href="#" aria-label="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="/about.html">About Us</a></li>
+                    <li><a href="/services.html">Services</a></li>
+                    <li><a href="/pharmacy/signup.html">Pharmacy Sign Up</a></li>
+                    <li><a href="/contact.html">Contact Us</a></li>
+                    <li><a href="/faq.html">FAQs</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>For Pharmacies</h4>
+                <ul class="footer-links">
+                    <li><a href="/pharmacy/login.html">Pharmacy Login</a></li>
+                    <li><a href="/pharmacy/signup.html">Register Your Pharmacy</a></li>
+                    <li><a href="/pharmacy/features.html">Features</a></li>
+                    <li><a href="/pharmacy/pricing.html">Pricing</a></li>
+                    <li><a href="/pharmacy/support.html">Support Center</a></li>
+                </ul>
+            </div>
+            
+            <div class="footer-section">
+                <h4>Newsletter</h4>
+                <p>Subscribe to our newsletter for the latest updates and offers.</p>
+                <form class="newsletter-form">
+                    <div class="input-group">
+                        <input type="email" placeholder="Your email address" required>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-paper-plane"></i>
+                        </button>
+                    </div>
+                </form>
+                <div class="app-download">
+                    <p>Download Our App</p>
+                    <div class="app-buttons">
+                        <a href="#" class="app-store">
+                            <img src="/images/app-store.svg" alt="Download on the App Store">
+                        </a>
+                        <a href="#" class="play-store">
+                            <img src="/images/play-store.svg" alt="Get it on Google Play">
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <div class="container">
+                <div class="copyright">
+                    &copy; 2023 PharmaConnect. All rights reserved.
+                </div>
+                <div class="footer-links-bottom">
+                    <a href="/privacy-policy.html">Privacy Policy</a>
+                    <a href="/terms-of-service.html">Terms of Service</a>
+                    <a href="/cookie-policy.html">Cookie Policy</a>
+                    <a href="/sitemap.xml">Sitemap</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Back to Top Button -->
+    <button id="back-to-top" class="back-to-top" aria-label="Back to top">
+        <i class="fas fa-arrow-up"></i>
+    </button>
+    
+    <!-- Scripts -->
+    <script src="/js/main.js"></script>
+    
+    <!-- Page-specific scripts -->
+    {% block extra_js %}{% endblock %}
+    
+    <!-- Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-XXXXXXXXXX');
+    </script>
+    
+    <!-- Cookie Consent -->
+    <div id="cookie-consent" class="cookie-consent">
+        <div class="cookie-content">
+            <p>We use cookies to enhance your experience. By continuing to visit this site, you agree to our use of cookies.</p>
+            <div class="cookie-buttons">
+                <button id="accept-cookies" class="btn btn-sm btn-primary">Accept</button>
+                <a href="/cookie-policy.html" class="btn btn-sm btn-outline">Learn More</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
