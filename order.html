@@ -1,0 +1,68 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Place Order | PharmaConnect</title>
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        .order-container {
+            display: flex;
+            max-width: 1200px;
+            margin: 2rem auto;
+            gap: 2rem;
+        }
+        .product-list {
+            flex: 3;
+        }
+        .cart-sidebar {
+            flex: 1;
+            padding: 1.5rem;
+            background-color: #fff;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="{% url 'home' %}" class="logo">
+            <i class="fas fa-prescription-bottle-alt"></i>
+            <span>PharmaConnect</span>
+        </a>
+        <nav class="nav-links">
+            <a href="{% url 'app' %}">Find a Pharmacy</a>
+            <a href="{% url 'user-orders' %}">My Orders</a>
+            <a href="#" id="logout-button-nav">Logout</a>
+        </nav>
+    </header>
+    <div class="order-container">
+        <main class="product-list">
+            <div class="product-header">
+                <h2 id="pharmacy-name">Products</h2>
+                <div class="search-and-filter">
+                    <div class="search-box">
+                        <i class="fas fa-search"></i>
+                        <input type="text" id="search-input" placeholder="Search for drugs...">
+                    </div>
+                    
+                </div>
+            </div>
+            <div id="product-grid" class="grid"></div>
+        </main>
+        <aside class="cart-sidebar">
+            <h3>Your Cart</h3>
+            <div id="cart-items"></div>
+            <hr>
+            <div class="cart-total">
+                <strong>Total: $<span id="cart-total-price">0.00</span></strong>
+            </div>
+            <button id="checkout-btn" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Checkout</button>
+        </aside>
+    </div>
+    <script src="{% static 'js/order_placement.js' %}"></script>
+</body>
+</html>
