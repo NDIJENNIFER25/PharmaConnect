@@ -1,0 +1,348 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Registration | PharmaConnect</title>
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        :root {
+            --primary: #3a8dde; /* Soothing blue - represents trust and reliability */
+            --primary-hover: #2a7bc0; /* Slightly darker blue for hover states */
+            --secondary: #5d7a99; /* Softer blue-gray for secondary elements */
+            --light-gray: #f1f5f9; /* Light background */
+            --border-color: #e2e8f0; /* Subtle border color */
+            --error: #e74c3c; /* Medical red - represents urgency */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-gray);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 2rem 0;
+            color: #334155;
+        }
+        .auth-container {
+            background-color: white;
+            padding: 2.5rem 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 600px;
+            text-align: center;
+        }
+        .auth-header {
+            margin-bottom: 2rem;
+        }
+        .auth-header .logo {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 1rem;
+        }
+        .auth-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+        }
+        .auth-header p {
+            color: var(--secondary);
+            margin: 0;
+        }
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1.25rem;
+        }
+        .form-group {
+            text-align: left;
+        }
+        .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+        .btn {
+            width: 100%;
+            padding: 0.875rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-top: 1rem;
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+        .auth-footer {
+            margin-top: 2rem;
+            font-size: 0.875rem;
+        }
+        .auth-footer a {
+            color: var(--primary);
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        .password-wrapper {
+            position: relative;
+        }
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--secondary);
+        }
+        .error-message {
+            color: var(--error);
+            font-size: 0.875rem;
+            text-align: left;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        #message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            display: none;
+            font-weight: 500;
+        }
+        #message.success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
+        #message.error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="header">
+        <a href="{% url 'home' %}" class="logo">
+            <i class="fas fa-prescription-bottle-alt"></i>
+            <span>PharmaConnect</span>
+        </a>
+        <nav class="nav-links">
+            <a href="{% url 'user-login' %}">User Login</a>
+        </nav>
+    </header>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1>Register Your Pharmacy</h1>
+            <p>Join our network to reach more customers.</p>
+        </div>
+        <div id="message"></div>
+        <form id="pharmacy-register-form" novalidate>
+            <div class="form-grid">
+                <div class="form-group">
+                    <label for="pharmacy-name">Pharmacy Name</label>
+                    <input type="text" id="pharmacy-name" class="form-control" required>
+                </div>
+                <div class="form-group">
+                    <label for="phone">Phone Number</label>
+                    <input type="tel" id="phone" class="form-control" required>
+                </div>
+                <div class="form-group full-width">
+                    <label for="email">Business Email (this will be your username)</label>
+                    <input type="email" id="email" class="form-control" required>
+                </div>
+                <div class="form-group full-width">
+                    <label for="address">Address</label>
+                    <input type="text" id="address" class="form-control" placeholder="Enter full address, e.g., Rue 1.234, Yaoundé" required>
+                </div>
+                <div class="form-group">
+                    <label for="latitude">Latitude</label>
+                    <input type="number" step="any" id="latitude" class="form-control" placeholder="e.g., 3.8480" required>
+                </div>
+                <div class="form-group">
+                    <label for="longitude">Longitude</label>
+                    <input type="number" step="any" id="longitude" class="form-control" placeholder="e.g., 11.5021" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="password" class="form-control" required minlength="8">
+                        <i class="fas fa-eye-slash toggle-password"></i>
+                    </div>
+                    <div class="error-message" id="password-error">Password must be at least 8 characters.</div>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password</label>
+                    <div class="password-wrapper">
+                        <input type="password" id="confirm-password" class="form-control" required>
+                    </div>
+                    <div class="error-message" id="confirm-password-error">Passwords do not match.</div>
+                </div>
+            </div>
+            <div class="form-group full-width">
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-spinner fa-spin" style="display: none;"></i>
+                    <span class="btn-text">Register Pharmacy</span>
+                </button>
+            </div>
+        </form>
+        <div class="auth-footer">
+            <p>Already have a pharmacy account? <a href="{% url 'pharmacy-login' %}">Sign in</a></p>
+        </div>
+    </div>
+
+
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    const pharmacyRegisterForm = document.getElementById('pharmacy-register-form');
+    if (pharmacyRegisterForm) {
+        pharmacyRegisterForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const submitButton = pharmacyRegisterForm.querySelector('button[type="submit"]');
+            const spinner = submitButton.querySelector('.fa-spinner');
+            const btnText = submitButton.querySelector('.btn-text');
+            const messageDiv = document.getElementById('message');
+
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const address = document.getElementById('address').value;
+
+            messageDiv.style.display = 'none';
+
+            if (password !== confirmPassword) {
+                messageDiv.textContent = 'Passwords do not match.';
+                messageDiv.className = 'error';
+                messageDiv.style.display = 'block';
+                return;
+            }
+
+            if (!address) {
+                messageDiv.textContent = 'Please provide your pharmacy address.';
+                messageDiv.className = 'error';
+                messageDiv.style.display = 'block';
+                return;
+            }
+
+            spinner.style.display = 'inline-block';
+            btnText.textContent = 'Registering...';
+            submitButton.disabled = true;
+
+            const apiData = {
+                user: {
+                    username: document.getElementById('email').value,
+                    email: document.getElementById('email').value,
+                    password: password
+                },
+                name: document.getElementById('pharmacy-name').value,
+                address: address,
+                phone_number: document.getElementById('phone').value,
+                latitude: parseFloat(document.getElementById('latitude').value),
+                longitude: parseFloat(document.getElementById('longitude').value)
+            };
+
+            try {
+                const response = await fetch('/api/register/pharmacy/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(apiData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    messageDiv.textContent = 'Registration successful! Redirecting to login...';
+                    messageDiv.className = 'success';
+                    messageDiv.style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = "{% url 'pharmacy-login' %}";
+                    }, 2000);
+                } else {
+                    let errorMessages = [];
+                    for (const key in data) {
+                        const value = data[key];
+                        if (typeof value === 'object' && value !== null) {
+                            for (const subKey in value) {
+                                errorMessages.push(`${subKey}: ${value[subKey]}`);
+                            }
+                        } else {
+                            errorMessages.push(`${key}: ${value}`);
+                        }
+                    }
+                    messageDiv.innerHTML = `<strong>Registration failed:</strong><br>${errorMessages.join('<br>')}`;
+                    messageDiv.className = 'error';
+                    messageDiv.style.display = 'block';
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                messageDiv.textContent = 'An unexpected error occurred. Please try again.';
+                messageDiv.className = 'error';
+                messageDiv.style.display = 'block';
+            } finally {
+                spinner.style.display = 'none';
+                btnText.textContent = 'Register Pharmacy';
+                submitButton.disabled = false;
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,425 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Login | PharmaConnect</title>
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        :root {
+            --primary: #3a8dde; /* Soothing blue - represents trust and reliability */
+            --primary-hover: #2a7bc0; /* Slightly darker blue for hover states */
+            --secondary: #5d7a99; /* Softer blue-gray for secondary elements */
+            --light-gray: #f1f5f9; /* Light background */
+            --border-color: #e2e8f0; /* Subtle border color */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-gray);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #334155;
+        }
+        .auth-container {
+            background-color: white;
+            padding: 2.5rem 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 450px;
+            text-align: center;
+        }
+        .auth-header {
+            margin-bottom: 2rem;
+        }
+        .auth-header .logo {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 1rem;
+        }
+        .auth-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+        }
+        .auth-header p {
+            color: var(--secondary);
+            margin: 0;
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+        .form-options {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+            font-size: 0.875rem;
+        }
+        .forgot-password {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+        .forgot-password:hover {
+            text-decoration: underline;
+        }
+        .btn {
+            width: 100%;
+            padding: 0.875rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+        .auth-footer {
+            margin-top: 2rem;
+            font-size: 0.875rem;
+        }
+        .auth-footer a {
+            color: var(--primary);
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        .password-wrapper {
+            position: relative;
+        }
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--secondary);
+        }
+        #message {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            display: none;
+            font-weight: 500;
+        }
+        #message .success {
+            background-color: #d1fae5;
+            color: #065f46;
+            border: 1px solid #6ee7b7;
+        }
+        #message .error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            border: 1px solid #fca5a5;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="{% url 'home' %}" class="logo">
+            <i class="fas fa-prescription-bottle-alt"></i>
+            <span>PharmaConnect</span>
+        </a>
+        <nav class="nav-links">
+            <a href="{% url 'user-login' %}">User Login</a>
+        </nav>
+    </header>
+    <div class="auth-container">
+        <div id="message"></div>
+        <form id="pharmacy-login-form" class="auth-form">
+            <div class="auth-header">
+                <h1>Pharmacy Portal</h1>
+                <p>Sign in to manage your pharmacy dashboard.</p>
+            </div>
+            <div class="form-group">
+                <label for="email">Business Email Address</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" class="form-control" required>
+                    <i class="fas fa-eye-slash toggle-password"></i>
+                </div>
+            </div>
+            <div class="form-options">
+                <div class="form-check">
+                    <input type="checkbox" id="remember-me">
+                    <label for="remember-me">Remember me</label>
+                </div>
+                <a href="#" class="forgot-password">Forgot password?</a>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-spinner fa-spin" style="display: none;"></i>
+                <span class="btn-text">Sign In</span>
+            </button>
+        </form>
+        <div class="auth-footer">
+            <p>Don't have a pharmacy account? <a href="{% url 'pharmacy-signup' %}">Register here</a></p>
+            <p>Not a pharmacy? <a href="{% url 'user-login' %}">User login</a></p>
+        </div>
+    </div>
+
+    <script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    // Helper function to get CSRF token from cookies
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                // Does this cookie string begin with the name we want?
+                if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // --- Pharmacy Registration Page Logic ---
+    const pharmacyRegisterForm = document.getElementById('pharmacy-register-form');
+    if (pharmacyRegisterForm) {
+        // This block will only run on the pharmacy signup page, which has the map
+        const mapboxAccessTokenEl = document.getElementById('mapbox-access-token');
+        if (mapboxAccessTokenEl) {
+            const mapboxAccessToken = mapboxAccessTokenEl.dataset.value;
+            mapboxgl.accessToken = mapboxAccessToken;
+            const geocoder = new MapboxGeocoder({
+                accessToken: mapboxAccessToken,
+                mapboxgl: mapboxgl,
+                placeholder: 'Enter address to find on map...'
+            });
+
+            document.getElementById('geocoder-container').appendChild(geocoder.onAdd(null));
+
+            geocoder.on('result', function(e) {
+                const coordinates = e.result.geometry.coordinates;
+                document.getElementById('address').value = e.result.place_name;
+                if(document.getElementById('latitude')) {
+                    document.getElementById('latitude').value = coordinates[1];
+                }
+                if(document.getElementById('longitude')) {
+                    document.getElementById('longitude').value = coordinates[0];
+                }
+            });
+        } else {
+            console.error('Mapbox access token element not found!');
+        }
+
+        // Registration form submission handler
+        pharmacyRegisterForm.addEventListener('submit', async function (e) {
+            e.preventDefault();
+
+            const submitButton = pharmacyRegisterForm.querySelector('button[type="submit"]');
+            const spinner = submitButton.querySelector('.fa-spinner');
+            const btnText = submitButton.querySelector('.btn-text');
+            const messageDiv = document.getElementById('message');
+
+            const formData = {
+                pharmacy_name: document.getElementById('pharmacy-name').value,
+                email: document.getElementById('email').value,
+                phone_number: document.getElementById('phone').value,
+                address: document.getElementById('address').value,
+                latitude: document.getElementById('latitude').value,
+                longitude: document.getElementById('longitude').value,
+                password: document.getElementById('password').value,
+                password_confirm: document.getElementById('confirm-password').value
+            };
+
+            if (formData.password !== formData.password_confirm) {
+                if(messageDiv) {
+                    messageDiv.innerHTML = '<p class="error">Passwords do not match.</p>';
+                    messageDiv.style.display = 'block';
+                }
+                return;
+            }
+
+            spinner.style.display = 'inline-block';
+            btnText.textContent = 'Registering...';
+            submitButton.disabled = true;
+            if (messageDiv) messageDiv.style.display = 'none';
+
+            const apiData = {
+                user: {
+                    username: formData.email,
+                    email: formData.email,
+                    password: formData.password
+                },
+                name: formData.pharmacy_name,
+                address: formData.address,
+                phone_number: formData.phone_number,
+                latitude: formData.latitude,
+                longitude: formData.longitude,
+            };
+
+            try {
+                const response = await fetch('/api/register/pharmacy/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify(apiData)
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    if(messageDiv) {
+                        messageDiv.innerHTML = '<p class="success">Registration successful! Redirecting to login...</p>';
+                        messageDiv.style.display = 'block';
+                    }
+                    setTimeout(() => {
+                        window.location.href = '/pharmacy/login/';
+                    }, 2000);
+                } else {
+                    let errorMessages = [];
+                    for (const key in data) {
+                        errorMessages.push(`${key}: ${Array.isArray(data[key]) ? data[key].join(', ') : data[key]}`);
+                    }
+                    if(messageDiv) {
+                        messageDiv.innerHTML = `<p class="error">Registration failed: ${errorMessages.join('<br>')}</p>`;
+                        messageDiv.style.display = 'block';
+                    }
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                if(messageDiv) {
+                    messageDiv.innerHTML = '<p class="error">An unexpected error occurred. Please try again.</p>';
+                    messageDiv.style.display = 'block';
+                }
+            } finally {
+                spinner.style.display = 'none';
+                btnText.textContent = 'Register Pharmacy';
+                submitButton.disabled = false;
+            }
+        });
+    }
+
+    // --- Pharmacy Login Page Logic ---
+    const pharmacyLoginForm = document.getElementById('pharmacy-login-form');
+    if (pharmacyLoginForm) {
+        // This block will only run on the pharmacy login page
+        pharmacyLoginForm.addEventListener('submit', async function (event) {
+            event.preventDefault();
+
+            const submitButton = pharmacyLoginForm.querySelector('button[type="submit"]');
+            const spinner = submitButton.querySelector('.fa-spinner');
+            const btnText = submitButton.querySelector('.btn-text');
+            const messageDiv = document.getElementById('message');
+
+            const formData = {
+                email: document.getElementById('email').value,
+                password: document.getElementById('password').value,
+            };
+
+            spinner.style.display = 'inline-block';
+            btnText.textContent = 'Signing In...';
+            submitButton.disabled = true;
+            if(messageDiv) messageDiv.style.display = 'none';
+
+            try {
+                const response = await fetch('/api/token/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken')
+                    },
+                    body: JSON.stringify({
+                        username: formData.email,
+                        password: formData.password,
+                    })
+                });
+
+                if (!response.ok) {
+                    const data = await response.json();
+                    throw new Error(data.detail || 'Login failed. Please check your credentials.');
+                }
+
+                const data = await response.json();
+                localStorage.setItem('accessToken', data.access);
+                localStorage.setItem('refreshToken', data.refresh);
+                localStorage.setItem('userType', 'pharmacy');
+
+                if(messageDiv) {
+                    messageDiv.innerHTML = '<p class="success">Login successful! Redirecting...</p>';
+                    messageDiv.style.display = 'block';
+                }
+
+                window.location.href = '/pharmacy/dashboard/';
+
+            } catch (error) {
+                console.error('Error:', error);
+                if(messageDiv) {
+                    messageDiv.innerHTML = `<p class="error">${error.message}</p>`;
+                    messageDiv.style.display = 'block';
+                }
+            } finally {
+                spinner.style.display = 'none';
+                btnText.textContent = 'Sign In';
+                submitButton.disabled = false;
+            }
+        });
+    }
+
+    // --- Logout Logic (for dashboard) ---
+    const logoutButton = document.getElementById('logout-button');
+    if (logoutButton) {
+        logoutButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('userType');
+            window.location.href = '/'; // Redirect to home page on logout
+        });
+    }
+});
+</script>
+</body>
+</html>
