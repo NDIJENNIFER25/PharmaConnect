@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PharmaConnect - {% block title %}{% endblock %}</title>
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/png" href="/images/favicon.png">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Main CSS -->
+    <link rel="stylesheet" href="/css/style.css">
+    
+    <!-- Page-specific CSS -->
+    {% block extra_css %}{% endblock %}
+    
+    <!-- Preload critical resources -->
+    <link rel="preload" href="/js/main.js" as="script">
+    <link rel="preload" href="/images/logo.svg" as="image" type="image/svg+xml">
+    
+    <!-- Meta tags -->
+    <meta name="description" content="{% block meta_description %}PharmaConnect - Connecting patients with pharmacies for better healthcare access.{% endblock %}">
+    <meta name="keywords" content="pharmacy, medication, healthcare, prescriptions, online pharmacy">
+    <meta name="theme-color" content="#4f46e5">
+    
+    <!-- Open Graph / Social Media -->
+    <meta property="og:title" content="PharmaConnect - {% block og_title %}Pharmacy Management System{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Connecting patients with pharmacies for better healthcare access.{% endblock %}">
+    <meta property="og:image" content="{% block og_image %}/images/og-image.jpg{% endblock %}">
+    <meta property="og:url" content="{{ request.url }}">
+    <meta property="og:type" content="website">
+    
+    <!-- Twitter Card -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="PharmaConnect - {% block twitter_title %}Pharmacy Management System{% endblock %}">
+    <meta name="twitter:description" content="{% block twitter_description %}Connecting patients with pharmacies for better healthcare access.{% endblock %}">
+    <meta name="twitter:image" content="{% block twitter_image %}/images/twitter-card.jpg{% endblock %}">
+    
+    <!-- Canonical URL -->
+    <link rel="canonical" href="{{ request.url }}">
+    
+    <!-- Preconnect to external domains -->
+    <link rel="preconnect" href="https://maps.googleapis.com">
+    <link rel="preconnect" href="https://maps.gstatic.com" crossorigin>
+    
+    <!-- Additional head content -->
+    {% block extra_head %}{% endblock %}
+</head>
+<body class="{% block body_class %}{% endblock %}">
+    <!-- Loading indicator -->
+    <div id="loading-indicator" class="loading-indicator">
+        <div class="spinner"></div>
+    </div>
+    
+    <!-- Skip to main content link for accessibility -->
+    <a href="#main-content" class="skip-link">Skip to main content</a>
