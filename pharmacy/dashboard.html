@@ -1,0 +1,441 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pharmacy Dashboard | PharmaConnect</title>
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        :root {
+            --primary: #3a8dde; /* Soothing blue - represents trust and reliability */
+            --primary-hover: #2a7bc0; /* Slightly darker blue for hover states */
+            --secondary: #5d7a99; /* Softer blue-gray for secondary elements */
+            --light-gray: #f1f5f9; /* Light background */
+            --border-color: #e2e8f0; /* Subtle border color */
+            --sidebar-bg: #1e3a5c; /* Deeper blue for sidebar - professional and calming */
+            --sidebar-text: #d4e5f7; /* Light blue text for better contrast */
+            --sidebar-text-hover: #ffffff; /* White text on hover for readability */
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-gray);
+            margin: 0;
+            color: #334155;
+        }
+
+        .dashboard-container {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            width: 260px;
+            background-color: var(--sidebar-bg);
+            color: var(--sidebar-text);
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+            transition: width 0.3s ease;
+        }
+
+        .sidebar-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 2.5rem;
+        }
+
+        .sidebar-header .logo-icon {
+            width: 32px;
+            height: 32px;
+        }
+
+        .sidebar-header .logo-text {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: white;
+        }
+
+        .sidebar-nav a {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.875rem 1rem;
+            border-radius: 0.5rem;
+            color: var(--sidebar-text);
+            text-decoration: none;
+            font-weight: 500;
+            transition: background-color 0.2s, color 0.2s;
+        }
+
+        .sidebar-nav a:hover,
+        .sidebar-nav a.active {
+            background-color: rgba(79, 70, 229, 0.2);
+            color: var(--sidebar-text-hover);
+        }
+
+        .sidebar-nav a i {
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            padding: 2rem;
+            overflow-y: auto;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+        }
+
+        .main-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .header-actions {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .profile-dropdown {
+            position: relative;
+        }
+
+        .profile-btn {
+            background: none;
+            border: none;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .profile-btn img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+        }
+
+        /* Stat Cards */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .stat-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+        }
+        
+        .stat-card .card-title {
+            font-weight: 500;
+            color: var(--secondary);
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-card .card-value {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+
+        /* Content Cards */
+        .content-card {
+            background-color: white;
+            padding: 1.5rem;
+            border-radius: 0.75rem;
+            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            margin-bottom: 1.5rem;
+        }
+
+        .content-card h2 {
+            margin-top: 0;
+            font-size: 1.25rem;
+        }
+        
+        .table-responsive {
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            text-align: left;
+        }
+
+        th, td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            font-weight: 600;
+            background-color: #f8fafc;
+        }
+
+        /* Button Styles */
+        .btn {
+            padding: 0.625rem 1.25rem;
+            border-radius: 0.5rem;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            border: 1px solid transparent;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+            border-color: var(--primary);
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1001;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+        }
+        .modal-content {
+            background-color: #fefefe;
+            margin: 10% auto;
+            padding: 2rem;
+            border: 1px solid #888;
+            width: 80%;
+            max-width: 500px;
+            border-radius: 0.75rem;
+            position: relative;
+        }
+        .close-btn {
+            color: #aaa;
+            position: absolute;
+            top: 1rem;
+            right: 1.5rem;
+            font-size: 28px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+        .close-btn:hover,
+        .close-btn:focus {
+            color: black;
+        }
+        #drug-form .form-group {
+            margin-bottom: 1rem;
+        }
+        #drug-form label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        #drug-form input {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            box-sizing: border-box;
+        }
+
+        /* Status Pill Styles */
+        .status-pill {
+            padding: 0.25rem 0.75rem;
+            border-radius: 9999px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-transform: capitalize;
+        }
+        .status-pending {
+            background-color: #fef9c3;
+            color: #854d0e;
+        }
+        .status-processing {
+            background-color: #dbeafe;
+            color: #1e40af;
+        }
+        .status-shipped {
+            background-color: #cce7f1;
+            color: #0b5e81;
+        }
+        .status-delivered {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+        .status-cancelled {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <img src="{% static 'images/logo.png' %}" alt="Logo" class="logo-icon">
+                <span class="logo-text">PharmaConnect</span>
+            </div>
+            <nav class="sidebar-nav">
+                <a href="#" class="active"><i class="fas fa-tachometer-alt"></i> Dashboard</a>
+                <a href="#"><i class="fas fa-boxes"></i> Inventory</a>
+                <a href="#"><i class="fas fa-receipt"></i> Orders</a>
+                <a href="#"><i class="fas fa-file-prescription"></i> Prescriptions</a>
+                <a href="#"><i class="fas fa-users"></i> Customers</a>
+                <a href="#"><i class="fas fa-chart-line"></i> Reports</a>
+                <a href="#"><i class="fas fa-cog"></i> Settings</a>
+            </nav>
+            <div class="sidebar-footer">
+                <a href="#" id="logout-button"><i class="fas fa-sign-out-alt"></i> Logout</a>
+            </div>
+        </aside>
+
+        <main class="main-content">
+            <header class="main-header">
+                <h1>Dashboard</h1>
+                <div class="header-actions">
+                    <button class="btn btn-primary" id="add-drug-btn"><i class="fas fa-plus"></i> Add New Drug</button>
+                    <div class="profile-dropdown">
+                        <button class="profile-btn">
+                            <img src="://i.pravatar.cc/40" alt="Profile">
+                            <span id="pharmacy-name">City Pharmacy</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="pharmacy-address">
+                    <p id="pharmacy-address">Address</p>
+                </div>
+            </header>
+
+            <div class="stats-grid">
+                <div class="stat-card">
+                    <div class="card-title">Total Revenue</div>
+                    <div class="card-value">XAF500</div>
+                </div>
+                <div class="stat-card">
+                    <div class="card-title">Total Orders</div>
+                    <div class="card-value">1</div>
+                </div>
+                <div class="stat-card">
+                    <div class="card-title">New Customers</div>
+                    <div class="card-value">1</div>
+                </div>
+                <div class="stat-card">
+                    <div class="card-title">Pending Prescriptions</div>
+                    <div class="card-value">0</div>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>Inventory</h2>
+                <div class="table-responsive">
+                    <table id="inventory-table">
+                        <thead>
+                            <tr>
+                                <th>Drug Name</th>
+                                <th>Manufacturer</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Last Updated</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Inventory items will be loaded here by inventory.js -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="content-card">
+                <h2>Recent Orders</h2>
+                <div class="table-responsive">
+                    <table id="orders-table">
+                        <thead>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Date</th>
+                                <th>Customer</th>
+                                <th>Total</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="orders-table-body">
+                            <!-- JS will populate this -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- Sales Chart Section (commented out as it requires JS library and data)
+            <div class="content-card">
+                <h2>Sales Overview</h2>
+                <canvas id="salesChart" style="max-height: 300px;"></canvas>
+            </div>
+            -->
+        </main>
+    </div>
+
+    <!-- Add/Edit Drug Modal -->
+    <div id="drug-modal" class="modal">
+        <div class="modal-content">
+            <span class="close-btn">&times;</span>
+            <h2 id="modal-title">Add New Drug</h2>
+            <form id="drug-form">
+                <input type="hidden" id="drug-id">
+                <div class="form-group">
+                    <label for="drug-name">Drug Name</label>
+                    <input type="text" id="drug-name" required>
+                </div>
+                <div class="form-group">
+                    <label for="manufacturer">Manufacturer</label>
+                    <input type="text" id="manufacturer" required>
+                </div>
+                <div class="form-group">
+                    <label for="quantity">Quantity</label>
+                    <input type="number" id="quantity" required>
+                </div>
+                <div class="form-group">
+                    <label for="price">Price</label>
+                    <input type="number" id="price" step="0.01" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Save Drug</button>
+            </form>
+        </div>
+    </div>
+    <script src="{% static 'js/pharmacy_auth.js' %}"></script>
+    <script src="{% static 'js/inventory.js' %}"></script>
+    <script src="{% static 'js/pharmacy_orders.js' %}"></script>
+</body>
+</html>

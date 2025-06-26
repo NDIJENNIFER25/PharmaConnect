@@ -1,0 +1,406 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create User Account | PharmaConnect</title>
+    <link rel="icon" type="image/png" href="{% static 'images/favicon.png' %}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <style>
+        :root {
+            --primary: #3a8dde; /* Soothing blue - represents trust and reliability */
+            --primary-hover: #2a7bc0; /* Slightly darker blue for hover states */
+            --secondary: #5d7a99; /* Softer blue-gray for secondary elements */
+            --light-gray: #f1f5f9; /* Light background */
+            --border-color: #e2e8f0; /* Subtle border color */
+            --error: #e74c3c; /* Medical red - represents urgency */
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--light-gray);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            color: #334155;
+        }
+        .auth-container {
+            background-color: white;
+            padding: 2.5rem 3rem;
+            border-radius: 1rem;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+            width: 100%;
+            max-width: 480px;
+            text-align: center;
+        }
+        .auth-header {
+            margin-bottom: 2rem;
+        }
+        .auth-header .logo {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 1rem;
+        }
+        .auth-header h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin: 0 0 0.5rem 0;
+        }
+        .auth-header p {
+            color: var(--secondary);
+            margin: 0;
+        }
+        .form-group {
+            margin-bottom: 1.25rem;
+            text-align: left;
+        }
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            font-size: 0.875rem;
+        }
+        .form-control {
+            width: 100%;
+            padding: 0.75rem 1rem;
+            border: 1px solid var(--border-color);
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+            box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.2);
+        }
+        .btn {
+            width: 100%;
+            padding: 0.875rem;
+            border: none;
+            border-radius: 0.5rem;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+        .btn-primary:hover {
+            background-color: var(--primary-hover);
+        }
+        .auth-footer {
+            margin-top: 2rem;
+            font-size: 0.875rem;
+        }
+        .auth-footer a {
+            color: var(--primary);
+            font-weight: 500;
+            text-decoration: none;
+        }
+        .auth-footer a:hover {
+            text-decoration: underline;
+        }
+        .password-wrapper {
+            position: relative;
+        }
+        .toggle-password {
+            position: absolute;
+            top: 50%;
+            right: 1rem;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color: var(--secondary);
+        }
+        .error-message {
+            color: var(--error);
+            font-size: 0.875rem;
+            text-align: left;
+            margin-top: 0.25rem;
+            display: none;
+        }
+        #message {
+            margin-top: 1.5rem;
+            padding: 1rem;
+            border-radius: 0.5rem;
+            font-weight: 500;
+            text-align: center;
+        }
+        #message.success {
+            background-color: #d1fae5;
+            color: #065f46;
+        }
+        #message.error {
+            background-color: #fee2e2;
+            color: #991b1b;
+            white-space: pre-wrap; /* Respect newlines in error messages */
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <a href="{% url 'home' %}" class="logo">
+            <i class="fas fa-prescription-bottle-alt"></i>
+            <span>PharmaConnect</span>
+        </a>
+        <nav class="nav-links">
+            <a href="{% url 'user-login' %}">Login</a>
+        </nav>
+    </header>
+    <div class="auth-container">
+        <div class="auth-header">
+            <h1>Create Your Account</h1>
+            <p>Get started with finding pharmacies near you.</p>
+        </div>
+        <form id="register-form" novalidate>
+            <div class="form-group">
+                <label for="name">Full Name</label>
+                <input type="text" id="name" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="email">Email Address</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="form-group">
+                <label for="password">Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="password" class="form-control" required minlength="8">
+                    <i class="fas fa-eye-slash toggle-password"></i>
+                </div>
+                <div class="error-message" id="password-error">Password must be at least 8 characters.</div>
+            </div>
+            <div class="form-group">
+                <label for="confirm-password">Confirm Password</label>
+                <div class="password-wrapper">
+                    <input type="password" id="confirm-password" class="form-control" required>
+                </div>
+                <div class="error-message" id="confirm-password-error">Passwords do not match.</div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fas fa-spinner fa-spin" style="display: none;"></i>
+                <span class="btn-text">Create Account</span>
+            </button>
+        </form>
+        <div id="message"></div>
+        <div class="auth-footer">
+            <p>Already have an account? <a href="{% url 'user-login' %}">Sign in</a></p>
+        </div>
+    </div>
+
+    <script>
+        const registerForm = document.getElementById('register-form');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirm-password');
+        const passwordError = document.getElementById('password-error');
+        const confirmPasswordError = document.getElementById('confirm-password-error');
+        const submitButton = registerForm.querySelector('button[type="submit"]');
+        const spinner = submitButton.querySelector('.fa-spinner');
+        const btnText = submitButton.querySelector('.btn-text');
+
+        registerForm.querySelectorAll('.toggle-password').forEach(toggle => {
+            toggle.addEventListener('click', function () {
+                const input = this.previousElementSibling;
+                const type = input.getAttribute('type') === 'password' ? 'text' : 'password';
+                input.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        });
+
+
+    </script>
+<script>
+// Helper function to get CSRF token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
+            }
+        }
+    }
+    return cookieValue;
+}
+
+document.addEventListener('DOMContentLoaded', () => {
+    const registerForm = document.getElementById('register-form');
+
+    if (registerForm) {
+        const submitButton = registerForm.querySelector('button[type="submit"]');
+        const spinner = submitButton.querySelector('.fa-spinner');
+        const btnText = submitButton.querySelector('.btn-text');
+
+        registerForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const name = document.getElementById('name').value;
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirm-password').value;
+            const messageDiv = document.getElementById('message');
+
+            // Clear previous messages
+            messageDiv.textContent = '';
+            messageDiv.className = 'message';
+
+            // Basic validation
+            if (password !== confirmPassword) {
+                messageDiv.textContent = 'Passwords do not match.';
+                messageDiv.classList.add('error');
+                return;
+            }
+
+            // Show loading state
+            spinner.style.display = 'inline-block';
+            btnText.textContent = 'Creating Account...';
+            submitButton.disabled = true;
+
+            try {
+                const response = await fetch('/api/register/user/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken'),
+                    },
+                    body: JSON.stringify({
+                        username: name, // Using name as username
+                        email: email,
+                        password: password,
+                        user_type: 'customer'
+                    }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    messageDiv.innerHTML = '<p class="success">Registration successful! Redirecting to login...</p>';
+                    messageDiv.style.display = 'block';
+                    setTimeout(() => {
+                        window.location.href = '/user/login/';
+                    }, 2000);
+                } else {
+                    // Handle and display errors
+                    const errorMessage = Object.entries(data)
+                        .map(([key, value]) => `${key}: ${Array.isArray(value) ? value.join(', ') : value}`)
+                        .join('\n');
+                    messageDiv.innerHTML = '<p class="error">' + errorMessage + '</p>';
+                    messageDiv.style.display = 'block';
+                    // Reset button
+                    spinner.style.display = 'none';
+                    btnText.textContent = 'Create Account';
+                    submitButton.disabled = false;
+                }
+            } catch (error) {
+                console.error('Registration Error:', error);
+                messageDiv.textContent = 'An unexpected error occurred. Please try again.';
+                messageDiv.classList.add('error');
+                // Reset button
+                spinner.style.display = 'none';
+                btnText.textContent = 'Create Account';
+                submitButton.disabled = false;
+            }
+        });
+    }
+
+    const loginForm = document.getElementById('login-form');
+
+    if (loginForm) {
+        const passwordInput = document.getElementById('password');
+        const togglePassword = loginForm.querySelector('.toggle-password');
+        const submitButton = loginForm.querySelector('button[type="submit"]');
+        const spinner = submitButton.querySelector('.fa-spinner');
+        const btnText = submitButton.querySelector('.btn-text');
+
+        if (togglePassword) {
+            togglePassword.addEventListener('click', function () {
+                const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+                passwordInput.setAttribute('type', type);
+                this.classList.toggle('fa-eye');
+                this.classList.toggle('fa-eye-slash');
+            });
+        }
+
+        loginForm.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const username = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            const messageDiv = document.getElementById('message');
+
+            // Clear previous messages
+            if (messageDiv) {
+                messageDiv.textContent = '';
+                messageDiv.className = 'message';
+            }
+
+            // Show loading state
+            spinner.style.display = 'inline-block';
+            btnText.textContent = 'Signing In...';
+            submitButton.disabled = true;
+
+            try {
+                const response = await fetch('/api/token/', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRFToken': getCookie('csrftoken'),
+                    },
+                    body: JSON.stringify({
+                    username: username, // Using username for authentication
+                    password: password,
+                    user_type: 'customer' // Specify user type for authentication
+                }),
+                });
+
+                const data = await response.json();
+
+                if (response.ok) {
+                    // Store tokens and user type in localStorage
+                    localStorage.setItem('accessToken', data.access);
+                    localStorage.setItem('refreshToken', data.refresh);
+                    localStorage.setItem('userType', 'customer');
+
+                    // Redirect to the main app page
+                    window.location.href = '/app/';
+                } else {
+                    if (messageDiv) {
+                        messageDiv.textContent = data.detail || 'Login failed. Please check your credentials.';
+                        messageDiv.classList.add('error');
+                    }
+                    // Reset button
+                    spinner.style.display = 'none';
+                    btnText.textContent = 'Sign In';
+                    submitButton.disabled = false;
+                }
+            } catch (error) {
+                console.error('Login Error:', error);
+                if (messageDiv) {
+                    messageDiv.innerHTML = '<p class="error">An unexpected error occurred. Please try again.</p>';
+                    messageDiv.style.display = 'block';
+                }
+                // Reset button
+                spinner.style.display = 'none';
+                btnText.textContent = 'Sign In';
+                submitButton.disabled = false;
+            }
+        });
+    }
+});
+</script>
+</body>
+</html>
