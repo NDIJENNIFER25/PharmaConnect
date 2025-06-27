@@ -1,7 +1,7 @@
 /* App-specific Header */
 .header {
     background-color: white;
-    padding: 1rem 5%;
+    padding: 0.75rem 2%;
     border-bottom: 1px solid var(--border-color);
     display: flex;
     justify-content: space-between;
@@ -9,6 +9,43 @@
     position: sticky;
     top: 0;
     z-index: 1000;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+
+/* Mobile Header */
+@media (max-width: 767px) {
+    .header {
+        padding: 0.5rem 1rem;
+        flex-direction: column;
+        align-items: flex-start;
+    }
+    
+    .logo {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .nav-links {
+        display: none;
+    }
+    
+    .toggle-sidebar {
+        display: block;
+        position: fixed;
+        left: 15px;
+        top: 15px;
+        z-index: 1000;
+        background: var(--primary-color);
+        color: white;
+        border: none;
+        border-radius: 4px;
+        width: 40px;
+        height: 40px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    }
 }
 
 .logo {
@@ -112,41 +149,111 @@ body {
     box-shadow: 0 2px 10px rgba(0,0,0,0.1);
 }
 
+/* Auth Pages */
+.auth-container {
+    background-color: white;
+    padding: 1.5rem;
+    border-radius: 0.75rem;
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 400px;
+    margin: 1rem;
+}
+
+@media (min-width: 320px) and (max-width: 425px) {
+    .auth-container {
+        padding: 1.25rem;
+        margin: 0.5rem;
+    }
+}
+
+/* Map Container */
+.map-container {
+    width: 100%;
+    height: 300px;
+    border-radius: 0.5rem;
+    overflow: hidden;
+    margin: 1rem 0;
+}
+
+/* Pharmacy List */
+.pharmacy-list {
+    width: 100%;
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 0.5rem;
+}
+
+.pharmacy-item {
+    padding: 1rem;
+    border-bottom: 1px solid var(--border-color);
+    transition: background-color 0.3s;
+}
+
+.pharmacy-item:hover {
+    background-color: var(--primary-light);
+}
+
+/* Mobile Map Styles */
+@media (max-width: 767px) {
+    .map-container {
+        height: 200px;
+        margin: 0.5rem 0;
+    }
+    
+    .pharmacy-list {
+        max-height: 300px;
+        padding: 0.25rem;
+    }
+    
+    .pharmacy-item {
+        padding: 0.75rem;
+    }
+}
+
 /* Small phones (320px) */
-@media (min-width: 320px) {
+@media (max-width: 320px) {
+    .container {
+        padding: 0.25rem;
+    }
+    
+    .header {
+        padding: 0.5rem 1.5%;
+    }
+    
+    .logo {
+        font-size: 1.1rem;
+    }
+    
+    .section {
+        padding: 2rem 1rem;
+    }
+    
+    .section-title {
+        font-size: 1.75rem;
+    }
+}
+
+/* Medium phones (375px) */
+@media (min-width: 375px) and (max-width: 425px) {
     .container {
         padding: 0.5rem;
     }
     
     .header {
-        padding: 0.75rem 2%;
+        padding: 0.6rem 2%;
     }
     
     .logo {
-        font-size: 1.25rem;
+        font-size: 1.2rem;
     }
     
-    .nav-links {
-        display: none;
-    }
-}
-
-/* Medium phones (375px) */
-@media (min-width: 375px) {
-    .container {
-        padding: 0.75rem;
+    .section {
+        padding: 2.5rem 1.25rem;
     }
     
-    .header {
-        padding: 0.75rem 3%;
-    }
-    
-    .logo {
-        font-size: 1.3rem;
-    }
-    
-    .nav-links {
-        display: none;
+    .section-title {
+        font-size: 1.875rem;
     }
 }
 
@@ -445,6 +552,39 @@ header {
     font-size: 0.9rem;
     transition: all 0.3s;
     text-decoration: none;
+    min-width: 120px;
+}
+
+/* Mobile Button Styles */
+@media (max-width: 767px) {
+    .btn {
+        padding: 0.5rem 1rem;
+        font-size: 0.85rem;
+        min-width: 100px;
+    }
+    
+    .btn-group {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+}
+
+/* Form Elements */
+input, select, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid var(--border-color);
+    border-radius: 4px;
+    font-size: 0.9rem;
+    transition: border-color 0.3s;
+}
+
+@media (max-width: 767px) {
+    input, select, textarea {
+        padding: 0.6rem;
+        font-size: 0.85rem;
+    }
 }
 
 .btn-outline {
@@ -1090,8 +1230,8 @@ input[type="text"], input[type="search"] {
 
 .dashboard-container {
     display: flex;
-    width: 100%;
     min-height: 100vh;
+    flex-direction: column;
 }
 
 .sidebar {
@@ -1107,23 +1247,26 @@ input[type="text"], input[type="search"] {
 }
 
 @media (max-width: 992px) {
-    .sidebar {
-        position: fixed;
-        left: -260px;
-        height: 100vh;
-        overflow-y: auto;
+    .dashboard-container {
+        flex-direction: column;
     }
     
-    .sidebar.active {
-        left: 0;
+    .sidebar {
+        width: 100%;
+        min-width: auto;
+        position: static;
+        height: auto;
+        box-shadow: none;
+        margin-bottom: 1rem;
     }
     
     .main-content {
-        margin-left: 0 !important;
+        width: 100%;
+        margin-left: 0;
     }
     
     .toggle-sidebar {
-        display: block !important;
+        display: none !important;
     }
 }
 
