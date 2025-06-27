@@ -3,7 +3,7 @@ from rest_framework.routers import DefaultRouter
 from .views import (
     UserCreateView, PharmacyCreateView, PharmacyListView, 
     PharmacyInventoryListView, InventoryViewSet, OrderViewSet, 
-    DrugViewSet, InventorySearchView
+    DrugViewSet, InventorySearchView, project_showcase
 )
 
 router = DefaultRouter()

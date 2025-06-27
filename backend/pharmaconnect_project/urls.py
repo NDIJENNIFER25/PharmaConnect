@@ -17,7 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.views.generic import TemplateView
-from core.views import AppView, CustomTokenObtainPairView, PharmacySignupView
+from core.views import AppView, CustomTokenObtainPairView, PharmacySignupView, project_showcase
 from rest_framework_simplejwt.views import (
     TokenRefreshView,
 )
@@ -40,6 +40,7 @@ urlpatterns = [
     path('user/login/', TemplateView.as_view(template_name='user/login.html'), name='user-login'),
     path('user/orders/', TemplateView.as_view(template_name='user/orders.html'), name='user-orders'),
     path('user/register/', TemplateView.as_view(template_name='user/register.html'), name='user-register-page'),
+    path('project-showcase.html', project_showcase, name='project-showcase'),
 ]
 
 # This is new: it tells Django to serve static files during development

@@ -9,9 +9,13 @@ from .permissions import IsPharmacyUser, IsOwnerOrPharmacy
 from rest_framework_simplejwt.views import TokenObtainPairView
 from django.conf import settings
 
+def project_showcase(request):
+    return render(request, 'project-showcase.html')
+
 class CustomTokenObtainPairView(TokenObtainPairView):
     """Custom token view that uses our serializer which supports user_type"""
     serializer_class = CustomTokenObtainPairSerializer
+
 
 class UserCreateView(generics.CreateAPIView):
     """Create a new user in the system"""

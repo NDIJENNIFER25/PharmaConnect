@@ -28,6 +28,21 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
+# Static files (CSS, JavaScript, Images)
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    BASE_DIR.parent / 'static',
+    BASE_DIR.parent / 'image',
+]
+
+# Media files (user uploaded files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR.parent / 'media'
+
+# Media files (user uploaded files)
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR.parent / 'media'
+
 
 # Application definition
 
