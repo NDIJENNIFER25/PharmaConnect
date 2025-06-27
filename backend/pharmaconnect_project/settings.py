@@ -53,6 +53,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'corsheaders',
 
     # Third-Party Apps
     'rest_framework',
@@ -70,7 +71,13 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
+
+CORS_ALLOW_CREDENTIALS = True
 
 ROOT_URLCONF = 'pharmaconnect_project.urls'
 
@@ -98,14 +105,14 @@ WSGI_APPLICATION = 'pharmaconnect_project.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'pharmaconnect_db',
-        'USER': 'postgres',      # <-- Replace with your PostgreSQL username (often 'postgres')
-        'PASSWORD': 'bass', # <-- Replace with your PostgreSQL password
-        'HOST': 'localhost',
+        'NAME': 'pharmacy_db_8lgq',
+        'USER': 'pharmacy_db_8lgq_user',      # <-- Replace with your PostgreSQL username (often 'postgres')
+        'PASSWORD': 'ZqESkC8RUaDWwgPCm1vKYizQ2G431bgs', # <-- Replace with your PostgreSQL password
+        'HOST': 'dpg-d1epdp7fte5s73ff26ig-a.oregon-postgres.render.com',
         'PORT': '5432',
     }
 }
-
+#postgresql://pharmacy_db_8lgq_user:ZqESkC8RUaDWwgPCm1vKYizQ2G431bgs@dpg-d1epdp7fte5s73ff26ig-a.oregon-postgres.render.com/pharmacy_db_8lgq
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
