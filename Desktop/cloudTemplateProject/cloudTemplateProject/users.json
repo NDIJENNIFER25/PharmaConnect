@@ -1,0 +1,60 @@
+{
+  "lubinket": {
+    "username": "lubinket",
+    "email": "nebamishael@gmail.com",
+    "full_name": "bih luiza",
+    "password_hash": "$2b$12$1my0dBavZ7CYeSNBxlogw.OB6Tq.WOBwypPBhstyLaCSux4U6K9BO",
+    "is_active": false,
+    "created_at": "2025-11-26T14:49:54.249672",
+    "phone": "682511155",
+    "updated_at": "2025-11-26T14:55:16.241243"
+  },
+  "daniel": {
+    "username": "daniel",
+    "email": "yomba.daniel@ictuniversity.edu.cm",
+    "full_name": "daniel yomba",
+    "password_hash": "$2b$12$npYKo593uGOeXu090vkGbuqjZdz/Ems2L1ouegts39owvT/Jq5uIC",
+    "is_active": false,
+    "created_at": "2025-11-26T15:06:12.193713"
+  },
+  "micbass": {
+    "username": "micbass",
+    "email": "nebamishael@gmail.com",
+    "full_name": "neba mishael amabo",
+    "password_hash": "$2b$12$PQWqICVDvIx/LUhnum63f.d3chVe2cQ9wXKjKIMoYnR0koi1FpI8i",
+    "is_active": false,
+    "created_at": "2025-11-26T15:11:39.352505"
+  },
+  "luiza": {
+    "username": "luiza",
+    "email": "lubinket@gmail.com",
+    "full_name": "luiza bih",
+    "password_hash": "$2b$12$V5C22M4PKKxVjHYXjmYkuuoLQKH/TpDI6anNvpT4HO62M/sDZJqCi",
+    "is_active": false,
+    "created_at": "2025-11-28T12:59:31.373109"
+  },
+  "neba": {
+    "username": "neba",
+    "email": "nebamishael@gmail.com",
+    "full_name": "mishael neba",
+    "password_hash": "$2b$12$a7QfYoCtlIpY4iu0c4xYkOXMdUcKLmj9Ol26dQ1YE3g0QvBOgwlx.",
+    "is_active": false,
+    "created_at": "2025-11-28T13:01:36.008585"
+  },
+  "liza": {
+    "username": "liza",
+    "email": "forwallamar.blentinu@ictuniversity.edu.cm",
+    "full_name": "liza",
+    "password_hash": "$2b$12$nz/dX/0C4zkCN8N0dy7OQOC9SgYhPhURikKqCE7TCs2jsazba9..G",
+    "is_active": false,
+    "created_at": "2025-11-28T13:14:50.147653"
+  },
+  "lois": {
+    "username": "lois",
+    "email": "girlmasked71@gmail.com",
+    "full_name": "lois bih",
+    "password_hash": "$2b$12$YGvnxyrx3TD9a/S5knPUOO3fpvvE960UhGzj5JGe8blxMduQg0qFq",
+    "is_active": false,
+    "created_at": "2025-11-28T13:38:43.535278"
+  }
+}

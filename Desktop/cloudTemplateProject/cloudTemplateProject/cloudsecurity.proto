@@ -1,0 +1,47 @@
+// Generate the gRPC service and message classes
+// python -m grpc_tools.protoc -I. --python_out=. --grpc_python_out=. cloudsecurity.proto
+
+syntax = "proto3";
+
+package cloud;
+
+service UserService {
+  rpc login (LoginRequest) returns (Response);
+  rpc signup (SignupRequest) returns (Response);
+  rpc enroll (EnrollRequest) returns (Response);
+  rpc verifyOtp (OtpVerification) returns (Response);
+}
+
+// Login request message
+message LoginRequest {
+  string username = 1;
+  string password = 2;
+}
+
+// Signup request message
+message SignupRequest {
+  string username = 1;
+  string email = 2;
+  string password = 3;
+  string full_name = 4;
+}
+
+// Enrollment request message
+message EnrollRequest {
+  string username = 1;
+  string email = 2;
+  string phone = 3;  // Optional: for SMS OTP
+}
+
+// OTP verification message
+message OtpVerification {
+  string username = 1;
+  string otp = 2;
+}
+
+// Generic response message
+message Response {
+  bool success = 1;
+  string message = 2;
+  string token = 3;  // For JWT or session token
+}
